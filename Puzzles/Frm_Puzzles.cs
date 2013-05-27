@@ -20,11 +20,9 @@ namespace Puzzles
             this.SetStyle(ControlStyles.UserPaint, true);
         }
 
-        Image img = Reference.startImage;
-
         private void Frm_Puzzles_Load(object sender, EventArgs e)
         {
-            setImage(img);
+            setImage(Reference.startImage);
         }
 
         public void setImage(Image img)
@@ -33,10 +31,9 @@ namespace Puzzles
             {
                 return;
             }
+            Reference.Image = img;
             pan_PuzzlePanel.Controls.Clear();
             PuzzlePiece pp = new PuzzlePiece();
-            this.img = img;
-            pp.Image = img;
             // TODO 
             // check size of img (SCALE?)
             // reposition frame on monitor
@@ -97,7 +94,7 @@ namespace Puzzles
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            setImage(img);
+            setImage(Reference.Image);
             for (int i = 0; i < Reference.initialSplits; i++)
             {
                 pan_PuzzlePanel.Split();

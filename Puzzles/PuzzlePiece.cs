@@ -12,7 +12,6 @@ namespace Puzzles
         public PuzzlePiece()
             : base()
         {
-            this.img = null;
             this.points = new Point[5];
             this.color = Color.Black;
             base.Paint += PuzzlePiece_Paint;
@@ -26,19 +25,17 @@ namespace Puzzles
             }
 
             e.Graphics.Clip = this.rgClip;
-            e.Graphics.DrawImage(this.Image, 0, 0);
+            e.Graphics.DrawImage(Reference.Image, 0, 0);
             e.Graphics.ResetClip();
             e.Graphics.DrawPath(new Pen(this.BorderColor, 2f), gpClip);
         }
-
-        private Image img;
-
+        
         public Image Image
         {
-            get { return img; }
+            get { return Reference.Image; }
             set
             {
-                img = value;
+                Reference.Image = value;
                 // set size of control to image size
                 this.Size = value.Size;
                 // (re-) init PointList
@@ -50,7 +47,7 @@ namespace Puzzles
         {
             // get image boundaries
             GraphicsUnit unit = GraphicsUnit.Pixel;
-            Rectangle rectImg = Rectangle.Round(this.Image.GetBounds(ref unit));
+            Rectangle rectImg = Rectangle.Round(Reference.Image.GetBounds(ref unit));
 
             // init pointlist -> clockwise
             // top left corner
@@ -151,11 +148,9 @@ namespace Puzzles
 
             pp1 = new PuzzlePiece();
             pp1.Bounds = this.Bounds;
-            pp1.Image = this.Image;
 
             pp2 = new PuzzlePiece();
             pp2.Bounds = this.Bounds;
-            pp2.Image = this.Image;
 
             ArrayList list1 = new ArrayList();
             ArrayList list2 = new ArrayList();
@@ -242,7 +237,6 @@ namespace Puzzles
             
             PuzzlePiece newPp = new PuzzlePiece();
             newPp.Location = this.Location;
-            newPp.Image = this.Image;
             newPp.points = (Point[])list.ToArray(typeof(Point));
             return newPp;
         }
