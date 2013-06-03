@@ -25,7 +25,7 @@ namespace Puzzles
             }
 
             e.Graphics.Clip = this.rgClip;
-            e.Graphics.DrawImage(Reference.Image, 0, 0);
+            e.Graphics.DrawImage(this.Image, 0, 0);
             e.Graphics.ResetClip();
             e.Graphics.DrawPath(new Pen(this.BorderColor, 2f), gpClip);
         }

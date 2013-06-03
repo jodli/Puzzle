@@ -31,9 +31,9 @@ namespace Puzzles
             {
                 return;
             }
-            Reference.Image = img;
             pan_PuzzlePanel.Controls.Clear();
             PuzzlePiece pp = new PuzzlePiece();
+            pp.Image = img;
             // TODO 
             // check size of img (SCALE?)
             // reposition frame on monitor
