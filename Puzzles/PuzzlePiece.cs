@@ -14,6 +14,7 @@ namespace Puzzles
         {
             this.points = new Point[5];
             this.color = Color.Black;
+            this.inPos = true;
             base.Paint += PuzzlePiece_Paint;
         }
 
@@ -24,15 +25,34 @@ namespace Puzzles
                 return;
             }
 
+            // draw clipped image
             e.Graphics.Clip = this.rgClip;
             e.Graphics.DrawImage(this.Image, 0, 0);
             e.Graphics.ResetClip();
+
+            // draw border around puzzlepiece
             e.Graphics.DrawPath(new Pen(this.BorderColor, 2f), gpClip);
         }
-        
+
+        // puzzlepiece in final position
+        private bool inPos;
+
+        public bool inPosition
+        {
+            get { return this.inPos; }
+            set { this.inPos = value; }
+        }
+
+        // moved image to static reference class
+        //private Image img; 
+
         public Image Image
         {
-            get { return Reference.Image; }
+            get
+            {
+                return Reference.Image;
+                //return this.img;
+            }
             set
             {
                 Reference.Image = value;
@@ -47,7 +67,7 @@ namespace Puzzles
         {
             // get image boundaries
             GraphicsUnit unit = GraphicsUnit.Pixel;
-            Rectangle rectImg = Rectangle.Round(Reference.Image.GetBounds(ref unit));
+            Rectangle rectImg = Rectangle.Round(this.Image.GetBounds(ref unit));
 
             // init pointlist -> clockwise
             // top left corner
@@ -61,15 +81,10 @@ namespace Puzzles
             // bottom left corner
             points[3] = new Point(rectImg.Left, rectImg.Bottom - 1);
 
-            // update graphicspath
-            //this.gp.Reset();
-            //this.gp.AddPolygon(points);
-
             this.Refresh();
-
-            // calculate area
-            //this.area = calcArea(points);
         }
+
+        // pointlist for polygon
         private Point[] points;
 
         public Point[] PointList
@@ -81,6 +96,7 @@ namespace Puzzles
         {
             get
             {
+                // recalculate graphicsclip when neede
                 GraphicsPath gp = new GraphicsPath();
                 gp.AddPolygon(this.PointList);
                 return gp;
@@ -91,11 +107,13 @@ namespace Puzzles
         {
             get
             {
+                // recalculate and set region when needed
                 this.Region = new Region(this.gpClip);
                 return this.Region;
             }
         }
 
+        // border color for puzzlepieces
         private Color color;
 
         public Color BorderColor
@@ -108,11 +126,13 @@ namespace Puzzles
             }
         }
 
+        // calculate area when needed
         public double Area
         {
             get { return this.calcArea(this.PointList); }
         }
 
+        // is (mousedown) point inside graphicsclip aka puzzlepiece
         public bool isInside(Point pt)
         {
             if (this.gpClip.IsVisible(pt))
@@ -122,6 +142,7 @@ namespace Puzzles
             return false;
         }
 
+        // calculate area of polygon
         private double calcArea(Point[] ptList)
         {
             int i, j;
@@ -148,9 +169,11 @@ namespace Puzzles
 
             pp1 = new PuzzlePiece();
             pp1.Bounds = this.Bounds;
+            //pp1.Image = this.Image;
 
             pp2 = new PuzzlePiece();
             pp2.Bounds = this.Bounds;
+            //pp2.Image = this.Image;
 
             ArrayList list1 = new ArrayList();
             ArrayList list2 = new ArrayList();
@@ -215,7 +238,7 @@ namespace Puzzles
             return false;
         }
 
-        // [WIP]
+        // [WIP] recombine puzzlepieces to get rid of borders
         public PuzzlePiece Combine(PuzzlePiece pp)
         {
             ArrayList list = new ArrayList();
@@ -234,13 +257,15 @@ namespace Puzzles
                 }
             }
             list.InsertRange(i, points2);
-            
+
             PuzzlePiece newPp = new PuzzlePiece();
             newPp.Location = this.Location;
+            newPp.Image = this.Image;
             newPp.points = (Point[])list.ToArray(typeof(Point));
             return newPp;
         }
 
+        // check if splitted new puzzlepiece is big enough
         private bool evalPuzzlePiece(PuzzlePiece pp)
         {
             bool flag = false;
@@ -266,6 +291,7 @@ namespace Puzzles
             return flag;
         }
 
+        // calculate a point on a line
         private Point createPointOnLine(Point p1, Point p2, double offset)
         {
             if (p1 == p2)
@@ -275,6 +301,7 @@ namespace Puzzles
             return new Point((int)(p1.X + offset * (p2.X - p1.X)), (int)(p1.Y + offset * (p2.Y - p1.Y)));
         }
 
+        // calculate width of puzzlepiece
         private double calcWidth(PuzzlePiece pp)
         {
             double width = 0f;
@@ -303,6 +330,7 @@ namespace Puzzles
             return Math.Sqrt(width);
         }
 
+        // calculate distance between two puzzlepieces
         public double Distance(PuzzlePiece pp2)
         {
             bool flag = false;
@@ -318,8 +346,8 @@ namespace Puzzles
                     }
                 }
             }
-            
-            // distance between two points (left side pp2 - left side this) and (top side pp2 - top side this) - pythagoras
+
+            // distance between two points (left side pp2 - left side this) and (top side pp2 - top side this)
             if (flag)
             {
                 return Math.Sqrt((Math.Pow(pp2.Left - this.Left, 2) + Math.Pow(pp2.Top - this.Top, 2)));

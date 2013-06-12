@@ -29,18 +29,20 @@
         private void InitializeComponent()
         {
             this.ms_Menu = new System.Windows.Forms.MenuStrip();
-            this.puzzleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadPictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stepbyStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dia_openPicture = new System.Windows.Forms.OpenFileDialog();
+            this.mni_Puzzle = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_NewGame = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_LoadPicture = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_Exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_Options = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_StepByStep = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_Solve = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_Help = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_About = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_LoadGame = new System.Windows.Forms.ToolStripMenuItem();
+            this.mni_SaveGame = new System.Windows.Forms.ToolStripMenuItem();
+            this.dia_OpenPicture = new System.Windows.Forms.OpenFileDialog();
             this.gbo_StepByStep = new System.Windows.Forms.GroupBox();
+            this.btn_Solve = new System.Windows.Forms.Button();
             this.btn_Distribute = new System.Windows.Forms.Button();
             this.btn_Split = new System.Windows.Forms.Button();
             this.pan_PuzzlePanel = new Puzzles.PuzzlePanel();
@@ -51,9 +53,9 @@
             // ms_Menu
             // 
             this.ms_Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.puzzleToolStripMenuItem,
-            this.optionsToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.mni_Puzzle,
+            this.mni_Options,
+            this.mni_Help});
             this.ms_Menu.Location = new System.Drawing.Point(0, 0);
             this.ms_Menu.Name = "ms_Menu";
             this.ms_Menu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -61,96 +63,106 @@
             this.ms_Menu.TabIndex = 0;
             this.ms_Menu.Text = "menuStrip1";
             // 
-            // puzzleToolStripMenuItem
+            // mni_Puzzle
             // 
-            this.puzzleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newGameToolStripMenuItem,
-            this.loadPictureToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.puzzleToolStripMenuItem.Name = "puzzleToolStripMenuItem";
-            this.puzzleToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.puzzleToolStripMenuItem.Text = "Puzzle";
+            this.mni_Puzzle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mni_NewGame,
+            this.mni_LoadPicture,
+            this.mni_Exit});
+            this.mni_Puzzle.Name = "mni_Puzzle";
+            this.mni_Puzzle.Size = new System.Drawing.Size(52, 20);
+            this.mni_Puzzle.Text = "&Puzzle";
             // 
-            // newGameToolStripMenuItem
+            // mni_NewGame
             // 
-            this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.newGameToolStripMenuItem.Text = "New Game";
-            this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
+            this.mni_NewGame.Name = "mni_NewGame";
+            this.mni_NewGame.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.mni_NewGame.Size = new System.Drawing.Size(224, 22);
+            this.mni_NewGame.Text = "&New Game";
+            this.mni_NewGame.Click += new System.EventHandler(this.mni_NewGame_Click);
             // 
-            // loadPictureToolStripMenuItem
+            // mni_LoadPicture
             // 
-            this.loadPictureToolStripMenuItem.Name = "loadPictureToolStripMenuItem";
-            this.loadPictureToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.mni_LoadPicture.Name = "mni_LoadPicture";
+            this.mni_LoadPicture.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.O)));
-            this.loadPictureToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.loadPictureToolStripMenuItem.Text = "Load Picture...";
-            this.loadPictureToolStripMenuItem.Click += new System.EventHandler(this.loadPictureToolStripMenuItem_Click);
+            this.mni_LoadPicture.Size = new System.Drawing.Size(224, 22);
+            this.mni_LoadPicture.Text = "L&oad Picture...";
+            this.mni_LoadPicture.Click += new System.EventHandler(this.mni_LoadPicture_Click);
             // 
-            // exitToolStripMenuItem
+            // mni_Exit
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.mni_Exit.Name = "mni_Exit";
+            this.mni_Exit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.mni_Exit.Size = new System.Drawing.Size(224, 22);
+            this.mni_Exit.Text = "E&xit";
+            this.mni_Exit.Click += new System.EventHandler(this.mni_Exit_Click);
             // 
-            // optionsToolStripMenuItem
+            // mni_Options
             // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stepbyStepToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "Options";
+            this.mni_Options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mni_StepByStep,
+            this.mni_Solve});
+            this.mni_Options.Name = "mni_Options";
+            this.mni_Options.Size = new System.Drawing.Size(61, 20);
+            this.mni_Options.Text = "Op&tions";
             // 
-            // stepbyStepToolStripMenuItem
+            // mni_StepByStep
             // 
-            this.stepbyStepToolStripMenuItem.CheckOnClick = true;
-            this.stepbyStepToolStripMenuItem.Name = "stepbyStepToolStripMenuItem";
-            this.stepbyStepToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.stepbyStepToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.stepbyStepToolStripMenuItem.Text = "Step-by-Step";
-            this.stepbyStepToolStripMenuItem.CheckedChanged += new System.EventHandler(this.stepbyStepToolStripMenuItem_CheckedChanged);
+            this.mni_StepByStep.CheckOnClick = true;
+            this.mni_StepByStep.Name = "mni_StepByStep";
+            this.mni_StepByStep.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.mni_StepByStep.Size = new System.Drawing.Size(162, 22);
+            this.mni_StepByStep.Text = "St&ep-by-Step";
+            this.mni_StepByStep.CheckedChanged += new System.EventHandler(this.mni_StepByStep_CheckedChanged);
             // 
-            // helpToolStripMenuItem
+            // mni_Solve
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.mni_Solve.Name = "mni_Solve";
+            this.mni_Solve.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.mni_Solve.Size = new System.Drawing.Size(162, 22);
+            this.mni_Solve.Text = "Sol&ve";
+            this.mni_Solve.Click += new System.EventHandler(this.mni_Solve_Click);
             // 
-            // aboutToolStripMenuItem
+            // mni_Help
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.mni_Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mni_About});
+            this.mni_Help.Name = "mni_Help";
+            this.mni_Help.Size = new System.Drawing.Size(44, 20);
+            this.mni_Help.Text = "&Help";
             // 
-            // loadGameToolStripMenuItem
+            // mni_About
             // 
-            this.loadGameToolStripMenuItem.Name = "loadGameToolStripMenuItem";
-            this.loadGameToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.loadGameToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.loadGameToolStripMenuItem.Text = "Load Game";
-            this.loadGameToolStripMenuItem.Click += new System.EventHandler(this.loadGameToolStripMenuItem_Click);
+            this.mni_About.Name = "mni_About";
+            this.mni_About.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.mni_About.Size = new System.Drawing.Size(126, 22);
+            this.mni_About.Text = "A&bout";
+            this.mni_About.Click += new System.EventHandler(this.mni_About_Click);
             // 
-            // saveGameToolStripMenuItem
+            // mni_LoadGame
             // 
-            this.saveGameToolStripMenuItem.Name = "saveGameToolStripMenuItem";
-            this.saveGameToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveGameToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.saveGameToolStripMenuItem.Text = "Save Game";
-            this.saveGameToolStripMenuItem.Click += new System.EventHandler(this.saveGameToolStripMenuItem_Click);
+            this.mni_LoadGame.Name = "mni_LoadGame";
+            this.mni_LoadGame.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.mni_LoadGame.Size = new System.Drawing.Size(215, 22);
+            this.mni_LoadGame.Text = "Load Game";
+            this.mni_LoadGame.Click += new System.EventHandler(this.mni_LoadGame_Click);
             // 
-            // dia_openPicture
+            // mni_SaveGame
             // 
-            this.dia_openPicture.FileName = "openFileDialog1";
+            this.mni_SaveGame.Name = "mni_SaveGame";
+            this.mni_SaveGame.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.mni_SaveGame.Size = new System.Drawing.Size(215, 22);
+            this.mni_SaveGame.Text = "Save Game";
+            this.mni_SaveGame.Click += new System.EventHandler(this.mni_SaveGame_Click);
+            // 
+            // dia_OpenPicture
+            // 
+            this.dia_OpenPicture.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF";
             // 
             // gbo_StepByStep
             // 
+            this.gbo_StepByStep.Controls.Add(this.btn_Solve);
             this.gbo_StepByStep.Controls.Add(this.btn_Distribute);
             this.gbo_StepByStep.Controls.Add(this.btn_Split);
             this.gbo_StepByStep.Location = new System.Drawing.Point(12, 266);
@@ -159,6 +171,16 @@
             this.gbo_StepByStep.TabIndex = 2;
             this.gbo_StepByStep.TabStop = false;
             this.gbo_StepByStep.Text = "Step by Step";
+            // 
+            // btn_Solve
+            // 
+            this.btn_Solve.Location = new System.Drawing.Point(168, 13);
+            this.btn_Solve.Name = "btn_Solve";
+            this.btn_Solve.Size = new System.Drawing.Size(75, 23);
+            this.btn_Solve.TabIndex = 2;
+            this.btn_Solve.Text = "Solve";
+            this.btn_Solve.UseVisualStyleBackColor = true;
+            this.btn_Solve.Click += new System.EventHandler(this.btn_Solve_Click);
             // 
             // btn_Distribute
             // 
@@ -215,20 +237,22 @@
 
         private System.Windows.Forms.MenuStrip ms_Menu;
         private PuzzlePanel pan_PuzzlePanel;
-        private System.Windows.Forms.ToolStripMenuItem puzzleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadPictureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem stepbyStepToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadGameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveGameToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog dia_openPicture;
+        private System.Windows.Forms.ToolStripMenuItem mni_Puzzle;
+        private System.Windows.Forms.ToolStripMenuItem mni_NewGame;
+        private System.Windows.Forms.ToolStripMenuItem mni_LoadPicture;
+        private System.Windows.Forms.ToolStripMenuItem mni_Exit;
+        private System.Windows.Forms.ToolStripMenuItem mni_Options;
+        private System.Windows.Forms.ToolStripMenuItem mni_StepByStep;
+        private System.Windows.Forms.ToolStripMenuItem mni_Help;
+        private System.Windows.Forms.ToolStripMenuItem mni_About;
+        private System.Windows.Forms.ToolStripMenuItem mni_LoadGame;
+        private System.Windows.Forms.ToolStripMenuItem mni_SaveGame;
+        private System.Windows.Forms.OpenFileDialog dia_OpenPicture;
         private System.Windows.Forms.GroupBox gbo_StepByStep;
         private System.Windows.Forms.Button btn_Distribute;
         private System.Windows.Forms.Button btn_Split;
+        private System.Windows.Forms.ToolStripMenuItem mni_Solve;
+        private System.Windows.Forms.Button btn_Solve;
     }
 }
 

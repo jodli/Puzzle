@@ -12,7 +12,8 @@ namespace Puzzles
 {
     class PuzzlePanel : Panel
     {
-        public PuzzlePanel() : base()
+        public PuzzlePanel()
+            : base()
         {
             base.Paint += PuzzlePanel_Paint;
             this.MouseMove += PuzzlePanel_MouseMove;
@@ -27,6 +28,7 @@ namespace Puzzles
             bool flag = false;
             ArrayList puzzlepieces = new ArrayList();
 
+            // save only puzzlepieces in arraylist
             foreach (Control control in this.Controls)
             {
                 if (control is PuzzlePiece)
@@ -38,12 +40,15 @@ namespace Puzzles
             foreach (PuzzlePiece pp in puzzlepieces)
             {
                 PuzzlePiece pp1, pp2;
+                // split puzzlepiece into two
                 if (pp.Split(out pp1, out pp2))
                 {
+                    // remove single puzzlepiece and add two splitted
                     this.Controls.Remove(pp);
                     this.Controls.Add(pp1);
                     this.Controls.Add(pp2);
 
+                    // add eventhandlers
                     pp1.MouseDown += new MouseEventHandler(this.PuzzlePiece_MouseDown);
                     pp1.MouseMove += new MouseEventHandler(this.PuzzlePiece_MouseMove);
                     pp1.MouseUp += new MouseEventHandler(this.PuzzlePiece_MouseUp);
@@ -55,12 +60,12 @@ namespace Puzzles
                     flag = true;
                 }
             }
-
             return flag;
         }
 
         void PuzzlePanel_Paint(object sender, PaintEventArgs pea)
         {
+            // draw border around puzzlepanel
             pea.Graphics.DrawRectangle(Pens.Black, 0, 0, base.Width - 1, base.Height - 1);
         }
 
@@ -82,7 +87,9 @@ namespace Puzzles
 
             if (clicked && sender == activePuzzlePiece)
             {
+                // move puzzlepiece -> not in position anymore
                 this.movePuzzlePiece(mea.Location);
+                activePuzzlePiece.inPosition = false;
             }
         }
 
@@ -93,9 +100,11 @@ namespace Puzzles
                 return;
             }
 
+            // move puzzlepiece accordingly
             activePuzzlePiece.Left += pt.X - MouseDownLocation.X;
             activePuzzlePiece.Top += pt.Y - MouseDownLocation.Y;
 
+            // change bodercolor when approaching matching puzzlepiece
             if (this.getNearPP() != null)
             {
                 activePuzzlePiece.BorderColor = Color.Green;
@@ -117,12 +126,15 @@ namespace Puzzles
             {
                 if (sender is PuzzlePiece)
                 {
-                    PuzzlePiece pp = (PuzzlePiece)sender;
-                    if (pp.isInside(mea.Location))
+                    // is click location inside puzzlepiece?
+                    if (((PuzzlePiece)sender).isInside(mea.Location))
                     {
+                        // save this position for moving
                         MouseDownLocation = mea.Location;
+                        // save mouse down
                         clicked = true;
-                        activePuzzlePiece = pp;
+                        // set active puzzlepiece
+                        activePuzzlePiece = (PuzzlePiece)sender;
                         movePuzzlePiece(mea.Location);
                     }
                 }
@@ -135,12 +147,16 @@ namespace Puzzles
             {
                 return;
             }
+
+            // move active (currently moved) puzzlepiece to final position next to second puzzlepiece
             PuzzlePiece pp = this.getNearPP();
             if (pp != null)
             {
                 activePuzzlePiece.Location = pp.Location;
+                activePuzzlePiece.inPosition = true;
+                findLocation();
 
-                // recombine puzzlepieces to get rid of borders [WIP]
+                // recombine puzzlepieces
                 //this.Controls.Remove(activePuzzlePiece);
                 //this.Controls.Remove(pp);
                 //PuzzlePiece newPp = activePuzzlePiece.Combine(pp);
@@ -150,14 +166,17 @@ namespace Puzzles
                 //this.Controls.Add(newPp); 
             }
             clicked = false;
+
             activePuzzlePiece.BorderColor = Color.Black;
             activePuzzlePiece = null;
         }
 
         public PuzzlePiece getNearPP()
         {
+            // iterate through puzzlepieces
             foreach (PuzzlePiece pp in this.Controls)
             {
+                // distance between active (currently moved) puzzlepiece and control < 6 pixels
                 if (pp != activePuzzlePiece && pp.Distance(activePuzzlePiece) < 6f)
                 {
                     return pp;
@@ -166,17 +185,68 @@ namespace Puzzles
             return null;
         }
 
-        public void Distribute ()
+        public void Distribute()
         {
             Random rnd = new Random(DateTime.Now.Millisecond);
             foreach (PuzzlePiece pp in this.Controls)
             {
-                int width = this.Width / pp.Width;
-                int height = this.Height / pp.Height;
-                pp.Location = new Point(rnd.Next((width - 1) * this.Width / width), rnd.Next((height - 1) * this.Height / height));
+                pp.inPosition = false;
+                // calculate new random position inside puzzlepanel for puzzlepiece location (top left corner of image)
+                pp.Location = new Point(rnd.Next((Reference.Ratio - 1) * this.Width / Reference.Ratio), rnd.Next((Reference.Ratio - 1) * this.Height / Reference.Ratio));
             }
             this.Refresh();
         }
 
+        // initial location for puzzlepieces if none is already in position
+        private Point loc = new Point(Reference.Image.Width, Reference.Image.Height);
+
+        public bool Solve()
+        {
+            // iterate over puzzlepiece controls
+            foreach (PuzzlePiece pp in this.Controls)
+            {
+                foreach (PuzzlePiece pp2 in this.Controls)
+                {
+                    if (pp == pp2 || pp.inPosition)
+                    {
+                        continue;
+                    }
+                    // pp has line in common with pp2
+                    if (pp.Distance(pp2) != double.MaxValue)
+                    {
+                        // set location of puzzlepiece
+                        pp.Location = loc;
+                        // pp is now in end position
+                        pp.inPosition = true;
+
+                        // puzzlepiece moved
+                        return true;
+                    }
+                }
+            }
+            // no puzzlepiece moved
+            return false;
+        }
+
+        public void findLocation()
+        {
+            bool flag = false;
+
+            // save location of puzzlepiece if one is already in position
+            foreach (PuzzlePiece pp in this.Controls)
+            {
+                if (flag)
+                {
+                    // reset position of puzzlepieces not in saved location
+                    pp.inPosition = false;
+                }
+                if (pp.inPosition)
+                {
+                    // save location of first puzzlepiece in position
+                    loc = pp.Location;
+                    flag = true;
+                }
+            }
+        }
     }
 }

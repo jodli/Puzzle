@@ -53,6 +53,12 @@
     <Compile Include="AboutPuzzles.Designer.cs">
       <DependentUpon>AboutPuzzles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_Difficulty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Difficulty.Designer.cs">
+      <DependentUpon>Frm_Difficulty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_Puzzles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,9 @@
     <Compile Include="Reference.cs" />
     <EmbeddedResource Include="AboutPuzzles.resx">
       <DependentUpon>AboutPuzzles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Difficulty.resx">
+      <DependentUpon>Frm_Difficulty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Puzzles.resx">
       <DependentUpon>Frm_Puzzles.cs</DependentUpon>

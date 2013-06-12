@@ -17,11 +17,11 @@ namespace Puzzles
         public Frm_Puzzles()
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.UserPaint, true);
         }
 
         private void Frm_Puzzles_Load(object sender, EventArgs e)
         {
+            // set initial image on start
             setImage(Reference.startImage);
         }
 
@@ -31,25 +31,39 @@ namespace Puzzles
             {
                 return;
             }
+            Reference.Image = img;
+
             pan_PuzzlePanel.Controls.Clear();
+
+            // create first puzzlepiece
             PuzzlePiece pp = new PuzzlePiece();
+
             pp.Image = img;
-            // TODO 
+            // reposition image in frame to the middle
+            pp.Location = new Point((img.Width * Reference.Ratio - img.Width) / 2, (img.Height * Reference.Ratio - img.Height) / 2);
+
             // check size of img (SCALE?)
-            // reposition frame on monitor
-            pp.Location = new Point(img.Width, img.Height);
-            pan_PuzzlePanel.Size = new Size(img.Width * 3, img.Height * 3);
+            // resize panel (3 * image size)
+            pan_PuzzlePanel.Size = new Size(img.Width * Reference.Ratio, img.Height * Reference.Ratio);
+            
+            // adjust frame size
             adjustSize();
+            
+            // add first puzzlepiece
             pan_PuzzlePanel.Controls.Add(pp);
+
             pan_PuzzlePanel.Refresh();
         }
 
         private bool stepper = false;
 
+        // adjust frame size
         private void adjustSize()
         {
             int width = pan_PuzzlePanel.Width +  (this.Width - this.ClientRectangle.Width);
             int height = pan_PuzzlePanel.Height + pan_PuzzlePanel.Top + (this.Height - this.ClientRectangle.Height);
+
+            // add single step menu to the bottom of the frame and connect it to the puzzlepanel
             if (stepper)
             {
                 height += gbo_StepByStep.Height;
@@ -58,17 +72,22 @@ namespace Puzzles
                 gbo_StepByStep.Left = pan_PuzzlePanel.Left;
             }
             gbo_StepByStep.Visible = stepper;
+
+            // set calculated frame size
             this.Size = new Size(width, height);
         }
 
-        private void loadPictureToolStripMenuItem_Click(object sender, EventArgs e)
+        // load a new picture
+        private void mni_LoadPicture_Click(object sender, EventArgs e)
         {
-            FileDialog fd = this.dia_openPicture;
+            // open file dialog at exe path
+            FileDialog fd = this.dia_OpenPicture;
             fd.InitialDirectory = Application.StartupPath;
             DialogResult res = fd.ShowDialog();
 
             if (res == DialogResult.OK)
             {
+                // try to open file as bitmap, catch exceptions
                 try
                 {
                     Bitmap bmp = new Bitmap(fd.FileName);
@@ -77,66 +96,99 @@ namespace Puzzles
                 catch (ArgumentException ae)
                 {
                     MessageBox.Show(String.Format("File {0} is not a Picture.", fd.FileName), "ERROR", MessageBoxButtons.OK);
-                    loadPictureToolStripMenuItem_Click(sender, e);
+                    mni_LoadPicture_Click(sender, e);
                 }
                 catch (FileNotFoundException fnfe)
                 {
                     MessageBox.Show(String.Format("File {0} not found.", fd.FileName), "ERROR", MessageBoxButtons.OK);
-                    loadPictureToolStripMenuItem_Click(sender, e);
+                    mni_LoadPicture_Click(sender, e);
                 }
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        // exit the game
+        private void mni_Exit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        // start a new game, choose difficulty
+        private void mni_NewGame_Click(object sender, EventArgs e)
         {
+            Frm_Difficulty dia_Difficulty = new Frm_Difficulty();
+            DialogResult res = dia_Difficulty.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                Reference.Difficulty = dia_Difficulty.diff;
+            }
+            else
+            {
+                return;
+            }
+
             setImage(Reference.Image);
-            for (int i = 0; i < Reference.initialSplits; i++)
+            for (int i = 0; i < (int)Reference.Difficulty; i++)
             {
                 pan_PuzzlePanel.Split();
             }
             pan_PuzzlePanel.Distribute();
         }
 
-        private void loadGameToolStripMenuItem_Click(object sender, EventArgs e)
+        // load last game from file [WIP]
+        private void mni_LoadGame_Click(object sender, EventArgs e)
         {
-            // load saved game from file... [WIP]
             //FileStream fs = new FileStream(Reference.SavePath, FileMode.Open);
             //fs.Close();
         }
 
-        private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
+        // save current game to file [WIP]
+        private void mni_SaveGame_Click(object sender, EventArgs e)
         {
-            // save game to file... serializable? save image only once! [WIP]
             //FileStream fs = new FileStream(Reference.SavePath, FileMode.CreateNew);
             //fs.Close();
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        // show about dialog... [WIP]
+        private void mni_About_Click(object sender, EventArgs e)
         {
-            // some about dialog... [WIP]
             AboutPuzzles box = new AboutPuzzles();
             box.ShowDialog();
         }
 
-        private void stepbyStepToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        // display step-by-step window
+        private void mni_StepByStep_CheckedChanged(object sender, EventArgs e)
         {
             stepper = !stepper;
+            // adjust frame size
             adjustSize();
         }
 
+        // split a puzzlepiece once
         private void btn_Split_Click(object sender, EventArgs e)
         {
             pan_PuzzlePanel.Split();
         }
 
+        // distribute puzzlepieces
         private void btn_Distribute_Click(object sender, EventArgs e)
         {
             pan_PuzzlePanel.Distribute();
+        }
+
+        // solve a puzzlepiece at a time
+        private void btn_Solve_Click(object sender, EventArgs e)
+        {
+            pan_PuzzlePanel.Solve();
+        }
+
+        // solve the whole puzzle
+        private void mni_Solve_Click(object sender, EventArgs e)
+        {
+            bool ret = false;
+            do
+            {
+                ret = pan_PuzzlePanel.Solve();
+            } while (ret);
         }
     }
 }
