@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.Serialization;
 using System.Windows.Forms;
 
 namespace Puzzles
@@ -50,12 +49,12 @@ namespace Puzzles
         {
             get
             {
-                return Reference.Image;
+                return Reference.currentImage;
                 //return this.img;
             }
             set
             {
-                Reference.Image = value;
+                Reference.currentImage = value;
                 // set size of control to image size
                 this.Size = value.Size;
                 // (re-) init PointList
@@ -96,7 +95,7 @@ namespace Puzzles
         {
             get
             {
-                // recalculate graphicsclip when neede
+                // recalculate graphicsclip when needed
                 GraphicsPath gp = new GraphicsPath();
                 gp.AddPolygon(this.PointList);
                 return gp;
@@ -180,7 +179,7 @@ namespace Puzzles
             int line1, line2;
 
             // try 10 times to split this puzzlepiece
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < Reference.SplitTries; i++)
             {
                 // clear polygon lists
                 list1.Clear();
@@ -242,7 +241,7 @@ namespace Puzzles
         public PuzzlePiece Combine(PuzzlePiece pp)
         {
             ArrayList list = new ArrayList();
-            int i = -1, j = 0;
+            int i = -1;
 
             ArrayList points1 = new ArrayList(this.PointList);
             ArrayList points2 = new ArrayList(pp.PointList);
@@ -271,19 +270,19 @@ namespace Puzzles
             bool flag = false;
 
             // minimum pixel area
-            if (pp.Area < 20f)
+            if (pp.Area < Reference.minArea)
             {
                 flag = true;
             }
 
             // area between 30% and 70% of original polygon; original == (pp1 + pp2)
-            if (pp.Area < this.Area * .3f || pp.Area > this.Area * .7f)
+            if (pp.Area < this.Area * Reference.minSize || pp.Area > this.Area * Reference.maxSize)
             {
                 flag = true;
             }
 
             // width greater 8 pixel
-            if (calcWidth(pp) < 8f)
+            if (calcWidth(pp) < Reference.minWidth)
             {
                 flag = true;
             }

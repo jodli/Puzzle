@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Puzzles
 {
-    partial class AboutPuzzles : Form
+    partial class Frm_About : Form
     {
-        public AboutPuzzles()
+        public Frm_About()
         {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);

@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Puzzles
@@ -198,7 +193,7 @@ namespace Puzzles
         }
 
         // initial location for puzzlepieces if none is already in position
-        private Point loc = new Point(Reference.Image.Width, Reference.Image.Height);
+        private Point loc = new Point(Reference.currentImage.Width, Reference.currentImage.Height);
 
         public bool Solve()
         {

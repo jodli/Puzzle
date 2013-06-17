@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Puzzles
@@ -31,7 +24,7 @@ namespace Puzzles
             {
                 return;
             }
-            Reference.Image = img;
+            Reference.currentImage = img;
 
             pan_PuzzlePanel.Controls.Clear();
 
@@ -93,12 +86,12 @@ namespace Puzzles
                     Bitmap bmp = new Bitmap(fd.FileName);
                     this.setImage(bmp);
                 }
-                catch (ArgumentException ae)
+                catch (ArgumentException)
                 {
                     MessageBox.Show(String.Format("File {0} is not a Picture.", fd.FileName), "ERROR", MessageBoxButtons.OK);
                     mni_LoadPicture_Click(sender, e);
                 }
-                catch (FileNotFoundException fnfe)
+                catch (FileNotFoundException)
                 {
                     MessageBox.Show(String.Format("File {0} not found.", fd.FileName), "ERROR", MessageBoxButtons.OK);
                     mni_LoadPicture_Click(sender, e);
@@ -126,7 +119,7 @@ namespace Puzzles
                 return;
             }
 
-            setImage(Reference.Image);
+            setImage(Reference.currentImage);
             for (int i = 0; i < (int)Reference.Difficulty; i++)
             {
                 pan_PuzzlePanel.Split();
@@ -151,8 +144,8 @@ namespace Puzzles
         // show about dialog... [WIP]
         private void mni_About_Click(object sender, EventArgs e)
         {
-            AboutPuzzles box = new AboutPuzzles();
-            box.ShowDialog();
+            Frm_About about = new Frm_About();
+            about.ShowDialog();
         }
 
         // display step-by-step window
@@ -189,6 +182,28 @@ namespace Puzzles
             {
                 ret = pan_PuzzlePanel.Solve();
             } while (ret);
+        }
+
+        // show settings dialog
+        private void mni_Settings_Click(object sender, EventArgs e)
+        {
+            Frm_Settings dia_settings = new Frm_Settings();
+            DialogResult res = dia_settings.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                // set new settings values
+                Reference.maxSize = dia_settings.maxSize;
+                Reference.minSize = dia_settings.minSize;
+                Reference.minArea = dia_settings.minArea;
+                Reference.minWidth = dia_settings.minWidth;
+                Reference.Ratio = dia_settings.ratio;
+                Reference.SplitTries = dia_settings.tries;
+
+                // refresh panel size
+                pan_PuzzlePanel.Size = new Size(Reference.currentImage.Width * Reference.Ratio, Reference.currentImage.Height * Reference.Ratio);
+                adjustSize();
+                this.Refresh();
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Puzzles
 {
-    partial class AboutPuzzles
+    partial class Frm_About
     {
         /// <summary>
         /// Required designer variable.

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Puzzles));
             this.ms_Menu = new System.Windows.Forms.MenuStrip();
             this.mni_Puzzle = new System.Windows.Forms.ToolStripMenuItem();
             this.mni_NewGame = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +46,7 @@
             this.btn_Solve = new System.Windows.Forms.Button();
             this.btn_Distribute = new System.Windows.Forms.Button();
             this.btn_Split = new System.Windows.Forms.Button();
+            this.mni_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.pan_PuzzlePanel = new Puzzles.PuzzlePanel();
             this.ms_Menu.SuspendLayout();
             this.gbo_StepByStep.SuspendLayout();
@@ -93,7 +95,7 @@
             // mni_Exit
             // 
             this.mni_Exit.Name = "mni_Exit";
-            this.mni_Exit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.mni_Exit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.mni_Exit.Size = new System.Drawing.Size(224, 22);
             this.mni_Exit.Text = "E&xit";
             this.mni_Exit.Click += new System.EventHandler(this.mni_Exit_Click);
@@ -102,6 +104,7 @@
             // 
             this.mni_Options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mni_StepByStep,
+            this.mni_Settings,
             this.mni_Solve});
             this.mni_Options.Name = "mni_Options";
             this.mni_Options.Size = new System.Drawing.Size(61, 20);
@@ -136,7 +139,7 @@
             // 
             this.mni_About.Name = "mni_About";
             this.mni_About.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.mni_About.Size = new System.Drawing.Size(126, 22);
+            this.mni_About.Size = new System.Drawing.Size(152, 22);
             this.mni_About.Text = "A&bout";
             this.mni_About.Click += new System.EventHandler(this.mni_About_Click);
             // 
@@ -167,16 +170,16 @@
             this.gbo_StepByStep.Controls.Add(this.btn_Split);
             this.gbo_StepByStep.Location = new System.Drawing.Point(12, 266);
             this.gbo_StepByStep.Name = "gbo_StepByStep";
-            this.gbo_StepByStep.Size = new System.Drawing.Size(260, 42);
+            this.gbo_StepByStep.Size = new System.Drawing.Size(205, 42);
             this.gbo_StepByStep.TabIndex = 2;
             this.gbo_StepByStep.TabStop = false;
             this.gbo_StepByStep.Text = "Step by Step";
             // 
             // btn_Solve
             // 
-            this.btn_Solve.Location = new System.Drawing.Point(168, 13);
+            this.btn_Solve.Location = new System.Drawing.Point(136, 13);
             this.btn_Solve.Name = "btn_Solve";
-            this.btn_Solve.Size = new System.Drawing.Size(75, 23);
+            this.btn_Solve.Size = new System.Drawing.Size(59, 23);
             this.btn_Solve.TabIndex = 2;
             this.btn_Solve.Text = "Solve";
             this.btn_Solve.UseVisualStyleBackColor = true;
@@ -184,9 +187,9 @@
             // 
             // btn_Distribute
             // 
-            this.btn_Distribute.Location = new System.Drawing.Point(87, 13);
+            this.btn_Distribute.Location = new System.Drawing.Point(71, 13);
             this.btn_Distribute.Name = "btn_Distribute";
-            this.btn_Distribute.Size = new System.Drawing.Size(75, 23);
+            this.btn_Distribute.Size = new System.Drawing.Size(59, 23);
             this.btn_Distribute.TabIndex = 1;
             this.btn_Distribute.Text = "Distribute";
             this.btn_Distribute.UseVisualStyleBackColor = true;
@@ -196,11 +199,19 @@
             // 
             this.btn_Split.Location = new System.Drawing.Point(6, 13);
             this.btn_Split.Name = "btn_Split";
-            this.btn_Split.Size = new System.Drawing.Size(75, 23);
+            this.btn_Split.Size = new System.Drawing.Size(59, 23);
             this.btn_Split.TabIndex = 0;
             this.btn_Split.Text = "Split";
             this.btn_Split.UseVisualStyleBackColor = true;
             this.btn_Split.Click += new System.EventHandler(this.btn_Split_Click);
+            // 
+            // mni_Settings
+            // 
+            this.mni_Settings.Name = "mni_Settings";
+            this.mni_Settings.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.mni_Settings.Size = new System.Drawing.Size(162, 22);
+            this.mni_Settings.Text = "Settin&gs";
+            this.mni_Settings.Click += new System.EventHandler(this.mni_Settings_Click);
             // 
             // pan_PuzzlePanel
             // 
@@ -220,6 +231,7 @@
             this.Controls.Add(this.pan_PuzzlePanel);
             this.Controls.Add(this.ms_Menu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.ms_Menu;
             this.Name = "Frm_Puzzles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -253,6 +265,7 @@
         private System.Windows.Forms.Button btn_Split;
         private System.Windows.Forms.ToolStripMenuItem mni_Solve;
         private System.Windows.Forms.Button btn_Solve;
+        private System.Windows.Forms.ToolStripMenuItem mni_Settings;
     }
 }
 
