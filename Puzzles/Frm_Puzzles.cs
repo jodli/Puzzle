@@ -200,7 +200,9 @@ namespace Puzzles
                 Reference.SplitTries = dia_settings.tries;
 
                 // refresh panel size
+                PuzzlePiece pp = (PuzzlePiece)pan_PuzzlePanel.Controls[0];
                 pan_PuzzlePanel.Size = new Size(Reference.currentImage.Width * Reference.Ratio, Reference.currentImage.Height * Reference.Ratio);
+                pp.Location = new Point((pp.Image.Width * Reference.Ratio - pp.Image.Width) / 2, (pp.Image.Height * Reference.Ratio - pp.Image.Height) / 2);
                 adjustSize();
                 this.Refresh();
             }

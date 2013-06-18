@@ -43,18 +43,19 @@ namespace Puzzles
         }
 
         // moved image to static reference class
-        //private Image img; 
+        private Image img; 
 
         public Image Image
         {
             get
             {
-                return Reference.currentImage;
-                //return this.img;
+                //return Reference.currentImage;
+                return this.img;
             }
             set
             {
-                Reference.currentImage = value;
+                //Reference.currentImage = value;
+                this.img = value;
                 // set size of control to image size
                 this.Size = value.Size;
                 // (re-) init PointList
@@ -168,11 +169,11 @@ namespace Puzzles
 
             pp1 = new PuzzlePiece();
             pp1.Bounds = this.Bounds;
-            //pp1.Image = this.Image;
+            pp1.Image = this.Image;
 
             pp2 = new PuzzlePiece();
             pp2.Bounds = this.Bounds;
-            //pp2.Image = this.Image;
+            pp2.Image = this.Image;
 
             ArrayList list1 = new ArrayList();
             ArrayList list2 = new ArrayList();
@@ -320,9 +321,9 @@ namespace Puzzles
             // calculate a, b, c and width^2 according to equation
             for (int i = 0; i < pp.PointList.Length - 1; i++)
             {
-                a += (Math.Pow((pp.PointList[i].X - mid1), 2));
-                b += ((pp.PointList[i].X - mid1) * (pp.PointList[i].Y - mid2));
-                c += (Math.Pow((pp.PointList[i].Y - mid2), 2));
+                a += Math.Pow((pp.PointList[i].X - mid1), 2);
+                b += (pp.PointList[i].X - mid1) * (pp.PointList[i].Y - mid2);
+                c += Math.Pow((pp.PointList[i].Y - mid2), 2);
             }
             width = (2f / (pp.PointList.Length - 1)) * (a + c - Math.Sqrt(Math.Pow((a + c), 2) - 4f * ((a * c) - Math.Pow(b, 2))));
 
@@ -349,7 +350,7 @@ namespace Puzzles
             // distance between two points (left side pp2 - left side this) and (top side pp2 - top side this)
             if (flag)
             {
-                return Math.Sqrt((Math.Pow(pp2.Left - this.Left, 2) + Math.Pow(pp2.Top - this.Top, 2)));
+                return Math.Sqrt(Math.Pow(pp2.Left - this.Left, 2) + Math.Pow(pp2.Top - this.Top, 2));
             }
             // no line in common
             else

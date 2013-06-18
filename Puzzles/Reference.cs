@@ -10,10 +10,10 @@ namespace Puzzles
     public enum Difficulty
     {
         VeryEasy = 1,
-        Easy = 2,
-        Medium = 3,
-        Hard = 4,
-        VeryHard = 5
+        Easy = 3,
+        Medium = 5,
+        Hard = 8,
+        VeryHard = 15
     }
 
     static class Reference
@@ -45,16 +45,16 @@ namespace Puzzles
         // game difficulty
         public static Difficulty Difficulty = Difficulty.Medium;
 
-        // try to split puzzlepieces (default: 5) times 
-        private static int _tries = 5;
+        // try to split puzzlepieces (default: 10) times 
+        private static int _tries = 10;
         public static int SplitTries
         {
             get { return _tries; }
             set
             {
-                if (value < 5)
+                if (value < 2)
                 {
-                    _tries = 5;
+                    _tries = 2;
                 }
                 else
                 {
@@ -70,9 +70,9 @@ namespace Puzzles
             get { return _minArea; }
             set
             {
-                if (value < 20f)
+                if (value < 5f)
                 {
-                    _minArea = 20f;
+                    _minArea = 5f;
                 }
                 else
                 {
@@ -88,9 +88,9 @@ namespace Puzzles
             get { return _minSize; }
             set
             {
-                if (value < .3f)
+                if (value < .05f)
                 {
-                    _minSize = .3f;
+                    _minSize = .05f;
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace Puzzles
             get { return _maxSize; }
             set
             {
-                if (value < .7f)
+                if (value < .05f)
                 {
                     _maxSize = .7f;
                 }
@@ -124,9 +124,9 @@ namespace Puzzles
             get { return _minWidth; }
             set
             {
-                if (value < 8f)
+                if (value < 3f)
                 {
-                    _minWidth = 8f;
+                    _minWidth = 3f;
                 }
                 else
                 {

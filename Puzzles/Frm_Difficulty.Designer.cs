@@ -81,6 +81,7 @@
             this.rdb_Medium.TabStop = true;
             this.rdb_Medium.Text = "Medium";
             this.rdb_Medium.UseVisualStyleBackColor = true;
+            this.rdb_Medium.CheckedChanged += new System.EventHandler(this.rdb_CheckedChanged);
             // 
             // rdb_Easy
             // 
@@ -91,6 +92,7 @@
             this.rdb_Easy.TabIndex = 4;
             this.rdb_Easy.Text = "Easy";
             this.rdb_Easy.UseVisualStyleBackColor = true;
+            this.rdb_Easy.CheckedChanged += new System.EventHandler(this.rdb_CheckedChanged);
             // 
             // rdb_Hard
             // 
@@ -101,6 +103,7 @@
             this.rdb_Hard.TabIndex = 5;
             this.rdb_Hard.Text = "Hard";
             this.rdb_Hard.UseVisualStyleBackColor = true;
+            this.rdb_Hard.CheckedChanged += new System.EventHandler(this.rdb_CheckedChanged);
             // 
             // rdb_VeryHard
             // 
@@ -111,6 +114,7 @@
             this.rdb_VeryHard.TabIndex = 6;
             this.rdb_VeryHard.Text = "Very Hard";
             this.rdb_VeryHard.UseVisualStyleBackColor = true;
+            this.rdb_VeryHard.CheckedChanged += new System.EventHandler(this.rdb_CheckedChanged);
             // 
             // pan_Difficulties
             // 
